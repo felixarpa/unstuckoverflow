@@ -38,8 +38,11 @@ def post():
                 maximum_mate = mate
                 maximum_list = skill_list
 
-        user = db_session().query(User).filter_by(id=maximum_mate).first()
-        response = dict(user=user.serialize(), skills=maximum_list)
+        if maximum_mate and maximum_list:
+            user = db_session().query(User).filter_by(id=maximum_mate).first()
+            response = dict(user=user.serialize(), skills=maximum_list)
+        else:
+            response = dict(user=None, skills=[])
         return jsonify(error=False, response=response), 200
     except Exception as e:
         log.error('Unexpected error in POST/help: {}'.format(e))
