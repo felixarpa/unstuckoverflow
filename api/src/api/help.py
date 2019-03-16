@@ -1,8 +1,10 @@
 from bs4 import BeautifulSoup
 from flask import jsonify, request
 
+from src import *
 from src.model.user import User
 from src.model.user_to_tag import UserToTag
+from src.services import nexmo
 from src.util import log
 from src.db.sqlalchemy import db_session
 
@@ -19,7 +21,7 @@ def post():
             return jsonify(error=True, message='No user found with {} as id.'.format(body['user_id'])), 400
 
         soup = BeautifulSoup(body['page_html'], 'html.parser')
-        tag_list = list(set(list(soup.find_all('a', {'class': 'post-tag'}))))
+        tag_list = list(set([a.text for a in soup.find_all('a', {'class': 'post-tag'})]))
 
         skills = {}
         company_mates = db_session().query(User).filter_by(company=user.company).all()
@@ -39,8 +41,16 @@ def post():
                 maximum_list = skill_list
 
         if maximum_mate and maximum_list:
-            user = db_session().query(User).filter_by(id=maximum_mate).first()
-            response = dict(user=user.serialize(), skills=maximum_list)
+            mate = db_session().query(User).filter_by(id=maximum_mate).first()
+            if len(maximum_list) == 1:
+                maximum_list_str = maximum_list[0]
+            else:
+                maximum_list_str = ', '.join(maximum_list[:-1])
+                maximum_list_str += ' and {}'.format(maximum_list[-1])
+            nexmo_message = 'Hey {}! Your friend {} is having some troubles with {}. Maybe you can give a hand!'\
+                .format(mate.full_name, user.full_name, maximum_list_str)
+            nexmo.send_sms(NEXMO_SENDER, mate.phone_number, nexmo_message)
+            response = dict(user=mate.serialize(), skills=maximum_list)
         else:
             response = dict(user=None, skills=[])
         return jsonify(error=False, response=response), 200
