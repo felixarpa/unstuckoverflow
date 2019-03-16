@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Alert, Button, Form } from 'react-bootstrap';
 import logo from '../../unstuckoverflow.svg';
 import { HOME, PROFILE } from '../../utils/PageKeys';
-import {Cookies} from "../../utils/Cookies";
+import { Cookies } from "../../utils/Cookies";
 
 const STYLES = {
   container: {
-    height: '600px',
     width: '400px',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-around',
     alignItems: 'center',
   },
   logo: {
+    marginTop: '20px',
+    marginBottom: '10px',
     height: '50px',
   },
   form: {
@@ -22,12 +22,12 @@ const STYLES = {
   },
   submit: {
     width: '150px',
-    marginBottom: '5px',
+    marginBottom: '20px',
     marginRight: '5px',
   },
   back: {
     width: '150px',
-    marginBottom: '5px',
+    marginBottom: '20px',
     marginLeft: '5px',
   },
 };
@@ -44,6 +44,10 @@ class Register extends Component {
       password: '',
       repeatPassword: '',
       loading: false,
+      error: {
+        active: true,
+        message: 'Password to short',
+      },
     };
   }
 
@@ -109,76 +113,8 @@ class Register extends Component {
       password,
       repeatPassword,
       loading,
+      error,
     } = this.state;
-
-    let passwordComponent = (
-      <Form.Control
-        required
-        type='password'
-        placeholder='Password'
-        onChange={this.handlePasswordChange}
-        value={password}
-      />
-    );
-
-    let repeatPasswordComponent = (
-      <Form.Control
-        required
-        type='password'
-        placeholder='Repeat password'
-        onChange={this.handleRepeatPasswordChange}
-        value={repeatPassword}
-      />
-    );
-
-    if (validated) {
-      if (password.length >= 8) {
-        passwordComponent = (
-          <Form.Control
-            required
-            type='password'
-            placeholder='Password'
-            onChange={this.handlePasswordChange}
-            value={password}
-            isValid
-          />
-        );
-      } else {
-        passwordComponent = (
-          <Form.Control
-            required
-            type='password'
-            placeholder='Password'
-            onChange={this.handlePasswordChange}
-            value={password}
-            isInvalid
-          />
-        );
-      }
-      if (password === repeatPassword) {
-        repeatPasswordComponent = (
-          <Form.Control
-            required
-            type='password'
-            placeholder='Repeat password'
-            onChange={this.handleRepeatPasswordChange}
-            value={repeatPassword}
-            isValid
-          />
-        );
-      } else {
-        repeatPasswordComponent = (
-          <Form.Control
-            required
-            type='password'
-            placeholder='Repeat password'
-            onChange={this.handleRepeatPasswordChange}
-            value={repeatPassword}
-            isInvalid
-          />
-        );
-      }
-    }
 
     return (
       <div style={STYLES.container}>
@@ -220,13 +156,25 @@ class Register extends Component {
           </Form.Group>
           <Form.Group controlId='formBasicPassword'>
             <Form.Label>Password</Form.Label>
-            {passwordComponent}
-            <Form.Text>The password must be at least 8 characters</Form.Text>
+            <Form.Control
+              required
+              type='password'
+              placeholder='Password'
+              onChange={this.handlePasswordChange}
+              value={password}
+            />
           </Form.Group>
           <Form.Group controlId='formBasicPassword'>
             <Form.Label>Repeat password</Form.Label>
-            {repeatPasswordComponent}
+            <Form.Control
+              required
+              type='password'
+              placeholder='Repeat password'
+              onChange={this.handleRepeatPasswordChange}
+              value={repeatPassword}
+            />
           </Form.Group>
+          { error.active ? (<Alert dismissible variant={'danger'}>{error.message}</Alert>) : null }
           <Button
             variant='primary'
             type='submit'
