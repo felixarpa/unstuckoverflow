@@ -12,6 +12,8 @@ servers:
 tags:
   - name: user
     description: endpoint for managing user options.
+  - name: help
+    description: endpoint to check which kind of help a user needs
 
 
 paths:
@@ -127,7 +129,34 @@ paths:
                 type: string
                 description: Error description.
 
-
+  /help:
+    post:
+      tags:
+        - help
+      summary: Checks What help a hacker needs from a StackOverflow page.
+      description: Invoke this endpoint to retrieve information of which help a user needs.
+      operationId: src.api.help.post
+        #      requestBody:
+        #        required: true
+        #        description: Body wrapper for the request.
+        #        content:
+        #          application/json:
+      #            schema:
+      #              $ref: "#/components/schemas/PageToCheck"
+      responses:
+        200:
+          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        default:
+          description: Unexpected error.
+          content:
+            application/text:
+              schema:
+                type: string
+                description: Error description.
 
 components:
   schemas:
