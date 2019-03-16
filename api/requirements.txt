@@ -7,3 +7,4 @@ requests
 SQLAlchemy
 psycopg2-binary
 nexmo
+beautifulsoup4

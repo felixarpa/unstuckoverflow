@@ -32,7 +32,7 @@ paths:
           description: Specifies the user to retrieve.
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         200:
           description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
@@ -53,13 +53,13 @@ paths:
       summary: Create a user
       description: Invoke this endpoint to create a new user given its information.
       operationId: src.api.user.post
-#      requestBody:
-#        required: true
-#        description: Body wrapper for the request.
-#        content:
-#          application/json:
-#            schema:
-#              $ref: "#/components/schemas/UserBody"
+      requestBody:
+        required: true
+        description: Body wrapper for the request.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserBody"
       responses:
         200:
           description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
@@ -234,13 +234,13 @@ paths:
       summary: Checks What help a hacker needs from a StackOverflow page.
       description: Invoke this endpoint to retrieve information of which help a user needs.
       operationId: src.api.help.post
-        #      requestBody:
-        #        required: true
-        #        description: Body wrapper for the request.
-        #        content:
-        #          application/json:
-      #            schema:
-      #              $ref: "#/components/schemas/PageToCheck"
+      requestBody:
+        required: true
+        description: Body wrapper for the request.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PageToCheck"
       responses:
         200:
           description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
@@ -299,3 +299,29 @@ components:
         response:
           type: object
           description: Contains the response data if the request was successful.
+
+    PageToCheck:
+      type: object
+      properties:
+        page_html:
+          type: string
+          description: Page HTML to scrape.
+        user_id:
+          type: integer
+          description: User identifier.
+
+    UserBody:
+      type: object
+      properties:
+        full_name:
+          type: string
+          description: User full name.
+        email:
+          type: string
+          description: User email.
+        password:
+          type: string
+          description: User SHA256 encoded password.
+        phone_number:
+          type: string
+          description: User phone number.

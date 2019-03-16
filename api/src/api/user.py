@@ -1,4 +1,6 @@
 from flask import jsonify, request
+
+from src import *
 from src.util import log
 from src.db.sqlalchemy import db_session
 from src.model.user import User
@@ -19,7 +21,32 @@ def get(user_id):
 
 def post():
     try:
-        return 'You made it'
+        body = request.json
+        required_parameters = ['full_name', 'email', 'password', 'phone_number']
+        if not all(x in body for x in required_parameters):
+            return jsonify(error=True, message='All request body parameters are required.'), 400
+
+        username, domain = body['email'].lower().split('@')
+        company = domain.split('.')[0]
+        if company in NO_COMPANY_EMAILS:
+            return jsonify(error=True, message='Specified email is not a company email.'), 400
+
+        user = db_session().query(User).filter_by(username=username, company=company).first()
+        if user:
+            return jsonify(error=True, message='The user already exists.'), 400
+
+        user = User(
+            username=username,
+            company=company,
+            full_name=body['full_name'],
+            email=body['email'],
+            password=body['password'],
+            phone_number=body['phone_number']
+        )
+        db_session().add(user)
+        db_session().commit()
+
+        return jsonify(error=False, response=user.serialize()), 200
     except Exception as e:
         log.error('Unexpected error in POST/user: {}'.format(e))
         return jsonify(error=True, message='Unexpected error.'), 400

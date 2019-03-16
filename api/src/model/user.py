@@ -6,7 +6,7 @@ from src.db.sqlalchemy import Base
 class User(Base):
     __tablename__ = 'unstuckoverflow_user'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.Sequence('unstuckoverflow_user_id_seq', start=1, increment=1), primary_key=True)
     username = db.Column(db.String(100), primary_key=True)
     company = db.Column(db.String(100), primary_key=True)
     full_name = db.Column(db.String(100), nullable=False)
