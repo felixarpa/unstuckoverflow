@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { LOADING, HOME, LOGIN, REGISTER, PROFILE } from './PageKeys';
 import Loading from './Components/Loading/Loading';
+import Home from './Components/Home/Home';
+import { Cookies } from './Cookies';
 
 const STYLES = {
   container: {
-    height: '300px',
-    width: '300px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    minHeight: '300px',
+    minWidth: '300px',
   },
 };
 
@@ -22,10 +21,23 @@ class App extends Component {
 
   componentDidMount() {
     if (this.state.pageKey === LOADING) {
-      // TODO: check cookies and go to the needed page
-
+      const cookies = Cookies.get();
+      const { userId } = cookies;
+      this.setState(userId ? {
+        pageKey: PROFILE,
+        userId: userId
+      } : {
+        pageKey: HOME,
+      });
     }
   }
+
+  navigate = (pageKey, params) => {
+    this.setState({
+      pageKey,
+      ...params,
+    });
+  };
 
   render() {
     const { pageKey } = this.state;
@@ -42,7 +54,7 @@ class App extends Component {
         content = (<div>PROFILE</div>);
         break;
       case HOME:
-        content = (<div>HOME</div>);
+        content = (<Home navigate={this.navigate}/>);
         break;
       default:
         content = (<Loading/>);
