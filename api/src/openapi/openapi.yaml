@@ -131,6 +131,102 @@ paths:
                 type: string
                 description: Error description.
 
+  /user/skills:
+    get:
+      tags:
+        - user
+      summary: Obtain all the skill from a user.
+      description: Invoke this endpoint to obtain all the skill from a user.
+      operationId: src.api.user_skills.get
+      parameters:
+        - name: user_id
+          in: query
+          description: Specifies the user to retrieve.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        default:
+          description: Unexpected error.
+          content:
+            application/text:
+              schema:
+                type: string
+                description: Error description.
+    post:
+      tags:
+        - user
+      summary: Creates a relation between a user and a Skill
+      description: Invoke this endpoint to relate a user with a skill.
+      operationId: src.api.user_skills.post
+      parameters:
+        - name: user_id
+          in: query
+          description: Specifies the user to relate.
+          required: true
+          schema:
+            type: string
+        - name: tag_id
+          in: query
+          description: Specifies the tag to relate.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        default:
+          description: Unexpected error.
+          content:
+            application/text:
+              schema:
+                type: string
+                description: Error description.
+    delete:
+      tags:
+        - user
+      summary: deletes a relation between a user and a Skill.
+      description: Invoke this endpoint to delete a skill from a user.
+      operationId: src.api.user_skills.delete
+      parameters:
+        - name: user_id
+          in: query
+          description: Specifies the user to relate.
+          required: true
+          schema:
+            type: string
+        - name: tag_id
+          in: query
+          description: Specifies the tag to relate.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        default:
+          description: Unexpected error.
+          content:
+            application/text:
+              schema:
+                type: string
+                description: Error description.
+
+
   /help:
     post:
       tags:

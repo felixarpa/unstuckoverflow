@@ -17,6 +17,6 @@ class UserToTag(Base):
 
     def serialize(self):
         return dict(
-            id=self.id,
-            name=self.name
+            user=self.user.serialize(),
+            tag=self.tag.serialize()
         )
