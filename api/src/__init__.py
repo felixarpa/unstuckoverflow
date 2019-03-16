@@ -11,11 +11,14 @@ NO_COMPANY_EMAILS = [
     'outlook'
 ]
 
+NEXMO_SENDER = 'Unstuck'
+
 
 __all__ = [
     'DB_USER',
     'DB_DB',
     'DB_PORT',
     'TAG_CSV_FILE',
-    'NO_COMPANY_EMAILS'
+    'NO_COMPANY_EMAILS',
+    'NEXMO_SENDER'
 ]
