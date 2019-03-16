@@ -4,6 +4,7 @@ import Loading from './Components/Loading/Loading';
 import Home from './Components/Home/Home';
 import { Cookies } from './utils/Cookies';
 import Login from "./Components/Login/Login";
+import Register from "./Components/Register/Register";
 
 const STYLES = {
   container: {
@@ -50,7 +51,7 @@ class App extends Component {
         content = (<Login navigate={this.navigate}/>);
         break;
       case REGISTER:
-        content = (<div>REGISTER</div>);
+        content = (<Register navigate={this.navigate}/>);
         break;
       case PROFILE:
         content = (<div>PROFILE</div>);
