@@ -32,7 +32,7 @@ paths:
           description: Specifies the user to retrieve.
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         200:
           description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
@@ -138,13 +138,13 @@ paths:
       summary: Checks What help a hacker needs from a StackOverflow page.
       description: Invoke this endpoint to retrieve information of which help a user needs.
       operationId: src.api.help.post
-        #      requestBody:
-        #        required: true
-        #        description: Body wrapper for the request.
-        #        content:
-        #          application/json:
-      #            schema:
-      #              $ref: "#/components/schemas/PageToCheck"
+      requestBody:
+        required: true
+        description: Body wrapper for the request.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PageToCheck"
       responses:
         200:
           description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
@@ -203,3 +203,13 @@ components:
         response:
           type: object
           description: Contains the response data if the request was successful.
+
+    PageToCheck:
+      type: object
+      properties:
+        page_html:
+          type: string
+          description: Page HTML to scrape.
+        user_id:
+          type: integer
+          description: User identifier.
