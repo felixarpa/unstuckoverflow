@@ -26,3 +26,18 @@ def post(user_id, tag_id):
     except Exception as e:
         log.error('Unexpected error in POST/user/skills: {}'.format(e))
         return jsonify(error=True, message='Unexpected error.'), 400
+
+
+def delete(user_id, tag_id):
+    try:
+        usuari_tag = db_session().query(UserToTag).filter_by(user_id=user_id, tag_id=tag_id).first()
+        if usuari_tag:
+            db_session().delete(usuari_tag)
+            db_session().commit()
+            return jsonify(error=False, response=''), 200
+        else:
+            return jsonify(error=True, message='No skill found for {} as user id, and {} as skill_id'
+                           .format(user_id, tag_id)), 400
+    except Exception as e:
+        log.error('Unexpected error in POST/user/skills: {}'.format(e))
+        return jsonify(error=True, message='Unexpected error.'), 400
