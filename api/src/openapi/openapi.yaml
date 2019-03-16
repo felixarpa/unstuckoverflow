@@ -14,6 +14,8 @@ tags:
     description: endpoint for managing user options.
   - name: help
     description: endpoint to check which kind of help a user needs
+  - name: tag
+    description: endpoint to obtain tags of skills.
 
 
 paths:
@@ -143,6 +145,35 @@ paths:
         #          application/json:
       #            schema:
       #              $ref: "#/components/schemas/PageToCheck"
+      responses:
+        200:
+          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        default:
+          description: Unexpected error.
+          content:
+            application/text:
+              schema:
+                type: string
+                description: Error description.
+
+  /tag:
+    get:
+      tags:
+        - tag
+      summary: Retrieve all the tags that contain the chars send in the parameters.
+      description: Invoke this endpoint to retrieve all the tags that start, end or contain a certain chars.
+      operationId: src.api.tag.get
+      parameters:
+        - name: prefix_tag
+          in: query
+          description: Specifies the chars a Skill/Tag must contain.
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
