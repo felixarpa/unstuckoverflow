@@ -11,6 +11,7 @@ class User(Base):
     company = db.Column(db.String(100), primary_key=True)
     full_name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
+    phone_number = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(500), nullable=False)
 
     def serialize(self):
@@ -20,5 +21,6 @@ class User(Base):
             company=self.company,
             full_name=self.full_name,
             email=self.email,
+            phone_number=self.email,
             password=self.password
         )

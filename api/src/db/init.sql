@@ -26,6 +26,7 @@ CREATE TABLE unstuckoverflow_user (
     full_name character varying(100) NOT NULL COLLATE pg_catalog."default",
     email character varying(100) NOT NULL COLLATE pg_catalog."default",
     password character varying(500) NOT NULL COLLATE pg_catalog."default",
+    phone_number character varying(100) NOT NULL COLLATE pg_catalog."default",
     CONSTRAINT unstuckoverflow_user_pkey PRIMARY KEY (id)
 ) WITH (OIDS = FALSE) TABLESPACE pg_default;
 
