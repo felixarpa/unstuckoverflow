@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import logo from '../../unstuckoverflow.svg';
-import { LOGIN, REGISTER } from '../../PageKeys';
+import { LOGIN, REGISTER } from '../../utils/PageKeys';
 
 const STYLES = {
   container: {
@@ -35,15 +35,13 @@ class Home extends Component {
           <Button
             variant='primary'
             style={STYLES.button}
-            onClick={() => this.props.navigate(LOGIN, {})}
-          >
+            onClick={() => this.props.navigate(LOGIN, {})}>
             Login
           </Button>
           <Button
             variant='secondary'
             style={STYLES.button}
-            onClick={() => this.props.navigate(REGISTER, {})}
-          >
+            onClick={() => this.props.navigate(REGISTER, {})}>
             Register
           </Button>
         </div>
