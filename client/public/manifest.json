@@ -1,11 +1,21 @@
 {
   "manifest_version": 2,
-  "name": "My Extension",
-  "description": "This extension is a starting point to create a real Chrome extension",
+  "name": "(un)stuckoverflow",
+  "description": "🤷 Asking is faster than StackOverflow",
   "version": "1.0",
   "minimum_chrome_version": "46",
   "browser_action": {
     "default_popup": "index.html"
   },
-  "content_security_policy": "script-src 'self' 'sha256-5As4+3YpY62+l38PsxCEkjB1R4YtyktBtRScTJ3fyLU='"
+  "icons": {
+    "16": "unstuckoverflow.png",
+    "48": "unstuckoverflow.png",
+    "128": "unstuckoverflow.png"
+  },
+  "content_security_policy": "script-src 'self' 'sha256-5As4+3YpY62+l38PsxCEkjB1R4YtyktBtRScTJ3fyLU='",
+  "permissions": [ "tabs", "<all_urls>" ],
+  "background": {
+    "scripts": [ "background.js" ],
+    "persistent": false
+  }
 }

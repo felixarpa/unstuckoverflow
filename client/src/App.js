@@ -1,27 +1,54 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { LOADING, HOME, LOGIN, REGISTER, PROFILE } from './PageKeys';
+import Loading from './Components/Loading/Loading';
+
+const STYLES = {
+  container: {
+    height: '300px',
+    width: '300px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+};
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageKey: LOADING,
+    };
+  }
+
+  componentDidMount() {
+    if (this.state.pageKey === LOADING) {
+      // TODO: check cookies and go to the needed page
+
+    }
+  }
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+    const { pageKey } = this.state;
+
+    let content = (<Loading/>);
+    switch (pageKey) {
+      case LOGIN:
+        content = (<div>LOGIN</div>);
+        break;
+      case REGISTER:
+        content = (<div>REGISTER</div>);
+        break;
+      case PROFILE:
+        content = (<div>PROFILE</div>);
+        break;
+      case HOME:
+        content = (<div>HOME</div>);
+        break;
+      default:
+        content = (<Loading/>);
+    }
+
+    return (<div style={STYLES.container}>{content}</div>);
   }
 }
 
