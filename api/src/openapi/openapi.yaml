@@ -111,13 +111,13 @@ paths:
       summary: Checks if a user's login information is valid
       description: Invoke this endpoint to validate a user's login information.
       operationId: src.api.user.login_post
-      #      requestBody:
-      #        required: true
-      #        description: Body wrapper for the request.
-      #        content:
-      #          application/json:
-      #            schema:
-      #              $ref: "#/components/schemas/UserLogin"
+      requestBody:
+        required: true
+        description: Body wrapper for the request.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLogin"
       responses:
         200:
           description: Standard UnstuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
@@ -325,3 +325,13 @@ components:
         tag_id:
           type: integer
           description: Tag identifier.
+
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          description: User email.
+        password:
+          type: string
+          description: User SHA256 encoded password.
