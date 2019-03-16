@@ -23,9 +23,9 @@ paths:
       description: Invoke this endpoint to retrieve information of a given user.
       operationId: src.api.user.get
 #      parameters:
-#        - name: trip_id
+#        - name: user_id
 #          in: query
-#          description: Specifies the trip to retrieve.
+#          description: Specifies the user to retrieve.
 #          required: true
 #          schema:
 #            type: string
@@ -43,6 +43,91 @@ paths:
               schema:
                 type: string
                 description: Error description.
+    post:
+      tags:
+        - user
+      summary: Create a user
+      description: Invoke this endpoint to create a new user given its information.
+      operationId: src.api.user.post
+#      requestBody:
+#        required: true
+#        description: Body wrapper for the request.
+#        content:
+#          application/json:
+#            schema:
+#              $ref: "#/components/schemas/UserBody"
+      responses:
+        200:
+          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        default:
+          description: Unexpected error.
+          content:
+            application/text:
+              schema:
+                type: string
+                description: Error description.
+    put:
+      tags:
+        - user
+      summary: Updates a user
+      description: Invoke this endpoint to update a user's information.
+      operationId: src.api.user.put
+#      requestBody:
+#        required: true
+#        description: Body wrapper for the request.
+#        content:
+#          application/json:
+#            schema:
+#              $ref: "#/components/schemas/UserBody"
+      responses:
+        200:
+          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        default:
+          description: Unexpected error.
+          content:
+            application/text:
+              schema:
+                type: string
+                description: Error description.
+
+  /user/login:
+    post:
+      tags:
+        - user
+        summary: Checks if a user's login information is valid.
+        description: Invoke this endpoint to validate a user's login information.
+        operationId: src.api.user.login_post
+        #      requestBody:
+        #        required: true
+        #        description: Body wrapper for the request.
+        #        content:
+        #          application/json:
+        #            schema:
+        #              $ref: "#/components/schemas/UserLogin"
+      responses:
+        200:
+          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        default:
+          description: Unexpected error.
+          content:
+            application/text:
+              schema:
+                type: string
+                description: Error description.
+
+
 
 components:
   schemas:
