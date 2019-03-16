@@ -62,7 +62,21 @@ def put():
 
 def login_post():
     try:
-        return 'You made it'
+        body = request.json
+        required_parameters = ['email', 'password']
+        if not all(x in body for x in required_parameters):
+            return jsonify(error=True, message='{} are required parameters.'.format(required_parameters)), 400
+
+        user = db_session().query(User).filter_by(email=body['email']).first()
+
+        if user:
+            contrasenya = user.password
+            if contrasenya == body['password'].lower():
+                return jsonify(error=False, response=''), 200
+            else:
+                return jsonify(error=True, message='The password is not correct'), 400
+        else:
+            return jsonify(error=True, message='No user found with {} as email.'.format(body['email'])), 400
     except Exception as e:
         log.error('Unexpected error in POST/user/login: {}'.format(e))
         return jsonify(error=True, message='Unexpected error.'), 400

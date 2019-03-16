@@ -3,7 +3,7 @@ openapi: '3.0.0'
 info:
   description: Asking is faster than stackOverflow if you know who to ask.
   version: '1.0'
-  title: (Un)StuckOverflow API
+  title: UnstuckOverflow API
 
 servers:
   - url: http://localhost:8081
@@ -12,6 +12,8 @@ servers:
 tags:
   - name: user
     description: endpoint for managing user options.
+  - name: skills
+    description: endpoint for managing user skills.
   - name: help
     description: endpoint to check which kind of help a user needs
   - name: tag
@@ -35,7 +37,7 @@ paths:
             type: integer
       responses:
         200:
-          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          description: Standard UnstuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
           content:
             application/json:
               schema:
@@ -62,7 +64,7 @@ paths:
               $ref: "#/components/schemas/UserBody"
       responses:
         200:
-          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          description: Standard UnstuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
           content:
             application/json:
               schema:
@@ -89,7 +91,7 @@ paths:
 #              $ref: "#/components/schemas/UserBody"
       responses:
         200:
-          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          description: Standard UnstuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
           content:
             application/json:
               schema:
@@ -106,19 +108,19 @@ paths:
     post:
       tags:
         - user
-      summary: Checks if a user's login information is valid.
+      summary: Checks if a user's login information is valid
       description: Invoke this endpoint to validate a user's login information.
       operationId: src.api.user.login_post
-      #      requestBody:
-      #        required: true
-      #        description: Body wrapper for the request.
-      #        content:
-      #          application/json:
-      #            schema:
-      #              $ref: "#/components/schemas/UserLogin"
+      requestBody:
+        required: true
+        description: Body wrapper for the request.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLogin"
       responses:
         200:
-          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          description: Standard UnstuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
           content:
             application/json:
               schema:
@@ -134,8 +136,8 @@ paths:
   /user/skills:
     get:
       tags:
-        - user
-      summary: Obtain all the skill from a user.
+        - skills
+      summary: Retrieve all the skills from a user
       description: Invoke this endpoint to obtain all the skill from a user.
       operationId: src.api.user_skills.get
       parameters:
@@ -144,10 +146,10 @@ paths:
           description: Specifies the user to retrieve.
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         200:
-          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          description: Standard UnstuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
           content:
             application/json:
               schema:
@@ -161,26 +163,20 @@ paths:
                 description: Error description.
     post:
       tags:
-        - user
-      summary: Creates a relation between a user and a Skill
+        - skills
+      summary: Create a relation between a user and a tag
       description: Invoke this endpoint to relate a user with a skill.
       operationId: src.api.user_skills.post
-      parameters:
-        - name: user_id
-          in: query
-          description: Specifies the user to relate.
-          required: true
-          schema:
-            type: string
-        - name: tag_id
-          in: query
-          description: Specifies the tag to relate.
-          required: true
-          schema:
-            type: string
+      requestBody:
+        required: true
+        description: Body wrapper for the request.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SkillBody"
       responses:
         200:
-          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          description: Standard UnstuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
           content:
             application/json:
               schema:
@@ -194,26 +190,20 @@ paths:
                 description: Error description.
     delete:
       tags:
-        - user
-      summary: deletes a relation between a user and a Skill.
+        - skills
+      summary: Delete a relation between a user and a tag
       description: Invoke this endpoint to delete a skill from a user.
       operationId: src.api.user_skills.delete
-      parameters:
-        - name: user_id
-          in: query
-          description: Specifies the user to relate.
-          required: true
-          schema:
-            type: string
-        - name: tag_id
-          in: query
-          description: Specifies the tag to relate.
-          required: true
-          schema:
-            type: string
+      requestBody:
+        required: true
+        description: Body wrapper for the request.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SkillBody"
       responses:
         200:
-          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          description: Standard UnstuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
           content:
             application/json:
               schema:
@@ -231,7 +221,7 @@ paths:
     post:
       tags:
         - help
-      summary: Checks What help a hacker needs from a StackOverflow page.
+      summary: Checks what help a hacker needs from a StackOverflow page
       description: Invoke this endpoint to retrieve information of which help a user needs.
       operationId: src.api.help.post
       requestBody:
@@ -243,7 +233,7 @@ paths:
               $ref: "#/components/schemas/PageToCheck"
       responses:
         200:
-          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          description: Standard UnstuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
           content:
             application/json:
               schema:
@@ -260,7 +250,7 @@ paths:
     get:
       tags:
         - tag
-      summary: Retrieve all the tags that contain the chars send in the parameters.
+      summary: Retrieve all the tags that contain the chars send in the parameters
       description: Invoke this endpoint to retrieve all the tags that start, end or contain a certain chars.
       operationId: src.api.tag.get
       parameters:
@@ -272,7 +262,7 @@ paths:
             type: string
       responses:
         200:
-          description: Standard (Un)StuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
+          description: Standard UnstuckOverflow API JSON response. You should check the `error` attribute to determine if there was an error.
           content:
             application/json:
               schema:
@@ -325,3 +315,23 @@ components:
         phone_number:
           type: string
           description: User phone number.
+
+    SkillBody:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          description: User identifier.
+        tag_id:
+          type: integer
+          description: Tag identifier.
+
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          description: User email.
+        password:
+          type: string
+          description: User SHA256 encoded password.
