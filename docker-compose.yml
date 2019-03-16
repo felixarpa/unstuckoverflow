@@ -29,21 +29,6 @@ services:
       - 8081:8081
     restart: always
 
-  # Client
-  unstuckoverflow-client-app:
-    container_name: unstuckoverflow-client-app
-    build:
-      context: client
-      dockerfile: Dockerfile
-    volumes:
-      - './client:/usr/src/app'
-      - '/usr/src/app/node_modules'
-    ports:
-      - 3000:3000
-    environment:
-      - NODE_ENV=development
-    restart: always
-
 # UnstuckOverflow network
 networks:
   unstuckoverflow:
