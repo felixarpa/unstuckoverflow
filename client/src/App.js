@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { LOADING, HOME, LOGIN, REGISTER, PROFILE } from './PageKeys';
+import { LOADING, HOME, LOGIN, REGISTER, PROFILE } from './utils/PageKeys';
 import Loading from './Components/Loading/Loading';
 import Home from './Components/Home/Home';
-import { Cookies } from './Cookies';
+import { Cookies } from './utils/Cookies';
+import Login from "./Components/Login/Login";
 
 const STYLES = {
   container: {
@@ -14,6 +15,7 @@ const STYLES = {
 class App extends Component {
   constructor(props) {
     super(props);
+    Cookies.set({});
     this.state = {
       pageKey: LOADING,
     };
@@ -45,7 +47,7 @@ class App extends Component {
     let content = (<Loading/>);
     switch (pageKey) {
       case LOGIN:
-        content = (<div>LOGIN</div>);
+        content = (<Login navigate={this.navigate}/>);
         break;
       case REGISTER:
         content = (<div>REGISTER</div>);
