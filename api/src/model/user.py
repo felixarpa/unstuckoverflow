@@ -20,5 +20,4 @@ class User(Base):
             company=self.company,
             full_name=self.full_name,
             email=self.email,
-            password=self.password
         )
