@@ -1,37 +1,37 @@
 version: '3.5'
 services:
   # API
-  foodlord-api-app:
-    image: foodlord-api-app
-    container_name: foodlord-api-app
+  unstuckoverflow-api-app:
+    image: unstuckoverflow-api-app
+    container_name: unstuckoverflow-api-app
     env_file:
       - api/.env
     build:
       context: api
       dockerfile: Dockerfile
     networks:
-      - foodlord
+      - unstuckoverflow
     ports:
       - 9081:9081
       - 3081:3081
     restart: always
     depends_on:
-      - foodlord-api-nginx
-  foodlord-api-nginx:
-    image: foodlord-api-nginx
-    container_name: foodlord-api-nginx
+      - unstuckoverflow-api-nginx
+  unstuckoverflow-api-nginx:
+    image: unstuckoverflow-api-nginx
+    container_name: unstuckoverflow-api-nginx
     build:
       context: api
       dockerfile: Dockerfile.nginx
     networks:
-      - foodlord
+      - unstuckoverflow
     ports:
       - 8081:8081
     restart: always
 
   # Client
-  foodlord-client-app:
-    container_name: foodlord-client-app
+  unstuckoverflow-client-app:
+    container_name: unstuckoverflow-client-app
     build:
       context: client
       dockerfile: Dockerfile
@@ -39,26 +39,13 @@ services:
       - './client:/usr/src/app'
       - '/usr/src/app/node_modules'
     ports:
-      - 80:3000
+      - 3000:3000
     environment:
       - NODE_ENV=development
     restart: always
 
-  # DB
-  foodlord-db:
-    image: foodlord-db
-    container_name: foodlord-db
-    build:
-      context: db
-      dockerfile: Dockerfile
-    restart: always
-    networks:
-      - foodlord
-    ports:
-      - 5432:5432
-
-# FoodLord network
+# UnstuckOverflow network
 networks:
-  foodlord:
-    name: foodlord
+  unstuckoverflow:
+    name: unstuckoverflow
     driver: bridge
