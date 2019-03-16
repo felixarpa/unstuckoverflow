@@ -21,7 +21,15 @@ To run the server, please execute the following from the root directory:
     pip3 install -r requirements.txt
     ```
 
-3. Run API server as a python module
+3. Initialize the `api` module environment creating the `.env` file.
+This file must have this structure (without the brackets):
+
+    ```bash
+    DB_PASSWORD={TO_FILL}
+    DB_HOST={TO_FILL}
+    ```
+
+4. Run API server as a python module
 
     ```bash
     python3 -m src
