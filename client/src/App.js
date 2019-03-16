@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { LOADING, HOME, LOGIN, REGISTER, PROFILE } from './utils/PageKeys';
+import { Cookies } from './utils/Cookies';
 import Loading from './Components/Loading/Loading';
 import Home from './Components/Home/Home';
-import { Cookies } from './utils/Cookies';
 import Login from "./Components/Login/Login";
-import Register from "./Components/Register/Register";
+import Register from './Components/Register/Register';
+import Profile from "./Components/Profile/Profile";
 
 const STYLES = {
   container: {
@@ -54,7 +55,7 @@ class App extends Component {
         content = (<Register navigate={this.navigate}/>);
         break;
       case PROFILE:
-        content = (<div>PROFILE</div>);
+        content = (<Profile navigate={this.navigate}/>);
         break;
       case HOME:
         content = (<Home navigate={this.navigate}/>);
