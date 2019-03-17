@@ -6,5 +6,9 @@ export const Cookies = {
       return {};
     }
   },
-  set: (cookies) => document.cookie = JSON.stringify(cookies),
+set: (cookies) => {
+  console.log('set');
+  console.log(cookies);
+  document.cookie = JSON.stringify(cookies)
+  },
 };

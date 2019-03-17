@@ -17,7 +17,6 @@ const STYLES = {
 class App extends Component {
   constructor(props) {
     super(props);
-    Cookies.set({});
     this.state = {
       pageKey: LOADING,
     };
@@ -44,7 +43,7 @@ class App extends Component {
   };
 
   render() {
-    const { pageKey } = this.state;
+    const { pageKey, userId } = this.state;
 
     let content = (<Loading/>);
     switch (pageKey) {
@@ -55,7 +54,7 @@ class App extends Component {
         content = (<Register navigate={this.navigate}/>);
         break;
       case PROFILE:
-        content = (<Profile navigate={this.navigate}/>);
+        content = (<Profile navigate={this.navigate} userId={userId}/>);
         break;
       case HOME:
         content = (<Home navigate={this.navigate}/>);

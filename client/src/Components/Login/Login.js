@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {Alert, Button, Form} from 'react-bootstrap';
 import logo from '../../unstuckoverflow.svg';
 import { HOME, PROFILE } from '../../utils/PageKeys';
-import {Cookies} from "../../utils/Cookies";
-import {login} from '../../utils/unstackoverflowClient';
-import Loading from "../SmallLoading/Loading";
+import { Cookies } from '../../utils/Cookies';
+import { login } from '../../utils/unstuckoverflowClient';
+import Loading from '../SmallLoading/Loading';
 
 const STYLES = {
   container: {
