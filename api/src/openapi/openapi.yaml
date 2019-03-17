@@ -8,6 +8,8 @@ info:
 servers:
   - url: http://localhost:8081
     description: Localhost endpoint.
+  - url: http://35.233.84.203:8081
+    description: Server endpoint.
 
 tags:
   - name: user
@@ -82,6 +84,7 @@ paths:
       summary: Updates a user
       description: Invoke this endpoint to update a user's information.
       operationId: src.api.user.put
+      deprecated: true
 #      requestBody:
 #        required: true
 #        description: Body wrapper for the request.
