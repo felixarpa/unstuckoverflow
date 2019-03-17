@@ -4,8 +4,6 @@
 </p>
 <br>
 
-# UnstuckOverflow
-
 [![HitCount](http://hits.dwyl.io/felixarpa/unstuckoverflow.svg)](http://hits.dwyl.io/felixarpa/unstuckoverflow)
 [![GitHub stars](https://img.shields.io/github/stars/felixarpa/unstuckoverflow.svg)](https://GitHub.com/felixarpa/unstuckoverflow/stargazers/)
 [![GitHub forks](https://img.shields.io/github/forks/felixarpa/unstuckoverflow.svg)](https://GitHub.com/felixarpa/unstuckoverflow/network/)
