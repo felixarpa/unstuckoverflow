@@ -67,8 +67,9 @@ def login_post():
         if not all(x in body for x in required_parameters):
             return jsonify(error=True, message='{} are required parameters.'.format(required_parameters)), 400
 
-        user = db_session().query(User).filter_by(email=body['email']).first()
-
+        username, domain = body['email'].lower().split('@')
+        company = domain.split('.')[0]
+        user = db_session().query(User).filter_by(username=username, company=company).first()
         if user:
             password = user.password
             if password == body['password'].lower():
