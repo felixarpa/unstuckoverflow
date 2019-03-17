@@ -1,7 +1,7 @@
 import axios from 'axios';
 import sjcl from 'sjcl';
 
-const BASE = 'http://localhost:8081';
+const BASE = 'http://35.187.102.14:8081';
 
 const encrypt = (password) => {
   const out = sjcl.hash.sha256.hash(password);
