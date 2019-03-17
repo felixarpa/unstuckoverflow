@@ -1,4 +1,8 @@
-# UnstuckOverflow
+<br>
+<p align="center">
+  <img alt="UnstuckOverflow" src="./client/public/unstuckoverflow-logo-without.png" width="50%"/>
+</p>
+<br>
 
 [![HitCount](http://hits.dwyl.io/felixarpa/unstuckoverflow.svg)](http://hits.dwyl.io/felixarpa/unstuckoverflow)
 [![GitHub stars](https://img.shields.io/github/stars/felixarpa/unstuckoverflow.svg)](https://GitHub.com/felixarpa/unstuckoverflow/stargazers/)
