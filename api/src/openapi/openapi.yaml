@@ -322,8 +322,8 @@ components:
         user_id:
           type: integer
           description: User identifier.
-        tag_id:
-          type: integer
+        tag_name:
+          type: string
           description: Tag identifier.
 
     UserLogin:
