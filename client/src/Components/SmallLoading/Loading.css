@@ -2,6 +2,8 @@
   animation: Loading-logo-spin infinite 5s linear;
   height: 50px;
   pointer-events: none;
+  margig-top: 20px;
+  margin-bottom: 10px;
 }
 
 @keyframes Loading-logo-spin {

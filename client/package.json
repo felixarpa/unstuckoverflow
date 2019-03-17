@@ -26,6 +26,7 @@
   ],
   "devDependencies": {
     "axios": "^0.18.0",
+    "grommet-icons": "^4.2.0",
     "react-bootstrap-typeahead": "^4.0.0-alpha.5",
     "sjcl": "^1.0.8"
   }

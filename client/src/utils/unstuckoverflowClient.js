@@ -76,10 +76,8 @@ export const deleteSkill = (userId, tagId) =>
 export const postSkill = (userId, tag) =>
   new Promise((resolve, reject) => {
     axios.post(`${BASE}/user/skills`, {
-      data: {
-        user_id: userId,
-        tag_name: tag,
-      }
+      user_id: userId,
+      tag_name: tag,
     }).then((response) => {
       const data = response.data;
       if (data.error) {

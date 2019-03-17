@@ -66,7 +66,7 @@ class Login extends Component {
           let cookies = Cookies.get();
           cookies.userId = response;
           Cookies.set(cookies);
-          self.props.navigate(PROFILE, {});
+          self.props.navigate(PROFILE, { userId: response });
         })
         .catch(() => self.setState({ loading: false, error: true}));
       this.setState({

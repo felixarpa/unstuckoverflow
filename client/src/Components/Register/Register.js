@@ -4,7 +4,7 @@ import logo from '../../unstuckoverflow.svg';
 import { HOME, PROFILE } from '../../utils/PageKeys';
 import { Cookies } from '../../utils/Cookies';
 import { postUser } from '../../utils/unstuckoverflowClient';
-import Loading from '../Login/Login';
+import Loading from '../SmallLoading/Loading';
 
 const STYLES = {
   container: {

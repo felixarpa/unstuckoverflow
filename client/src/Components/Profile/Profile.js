@@ -1,37 +1,62 @@
 import React, { Component } from 'react';
 import logo from '../../unstuckoverflow.svg';
 import {asyncContainer, Typeahead} from 'react-bootstrap-typeahead';
+import { Cookies } from '../../utils/Cookies';
 import {
   getSkills,
   deleteSkill,
   postSkill,
   getTag,
 } from '../../utils/unstuckoverflowClient';
-import {Button} from "react-bootstrap";
+import { Alert, Button } from 'react-bootstrap';
+import Loading from '../SmallLoading/Loading';
+import {HOME} from "../../utils/PageKeys";
 
 const AsyncTypeahead = asyncContainer(Typeahead);
 
 const STYLES = {
   container: {
-    width: '300px',
+    width: '400px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  buttonsContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
+  input: {
     width: '100px',
+    marginTop: '10px',
+  },
+  logoutButton: {
+    width: '100px',
+    marginTop: '20px',
+    marginBottom: '20px',
   },
   button: {
     width: '100px',
     marginTop: '10px',
+    marginBottom: '10px',
   },
   logo: {
     height: '50px',
-  }
+    marginTop: '20px',
+    marginBottom: '10px',
+  },
+  skill: {
+    width: '360px',
+    marginBottom: '5px',
+  },
 };
+
+const VARIANTS = [
+  'primary',
+  'secondary',
+  'success',
+  'danger',
+  'warning',
+  'info',
+  'light',
+  'dark',
+];
 
 class Profile extends Component {
   constructor(props) {
@@ -45,6 +70,8 @@ class Profile extends Component {
       userId: this.props.userId
     };
   }
+
+  error = () => this.setState({ error: true, loading: false });
 
   search = (query) => {
     this.setState({ loading: true });
@@ -61,18 +88,15 @@ class Profile extends Component {
     const { skills } = this.state;
     this.setState({ loading: true });
     deleteSkill(this.state.userId, id)
-      .then((response) => {
-        console.log(response);
+      .then(() =>
         this.setState({
           loading: false,
           skills: skills.filter(skill =>
             skill.id !== id
           )
-        });
-      })
-      .catch(() =>
-        this.setState({ error: true })
-      );
+        })
+      )
+      .catch(this.error);
   };
 
   addSkill = () => {
@@ -81,15 +105,15 @@ class Profile extends Component {
     const { userId, selected } = this.state;
     postSkill(userId, selected)
       .then((response) => {
-        console.log(response);
         this.setState({
           loading: false,
-          // options: response,
+          skills: [
+            ...skills,
+            response.tag,
+          ],
         });
       })
-      .catch(() =>
-        this.setState({ error: true })
-      );
+      .catch(this.error);
   };
 
   componentDidMount() {
@@ -97,45 +121,62 @@ class Profile extends Component {
       .then(response =>
         this.setState({
           loading: false,
-          skills: response
+          skills: response,
         })
       )
-      .catch(() =>
-        this.setState({
-          loading: false,
-          error: true,
-        })
-      );
+      .catch(this.error);
   }
 
   render() {
-    const { skills, options, loading } = this.state;
-    const tags = skills.map(skill => {
+    const { skills, options, loading, error } = this.state;
+    const tags = skills.map((skill, index) => {
       return (
-        <p
+        <Alert
+          style={STYLES.skill}
           key={skill.id}
-          onClick={() => this.delete(skill.id)}
-      >{skill.name}</p>);
+          dismissible
+          variant={VARIANTS[index % VARIANTS.length]}
+          onClose={() => this.delete(skill.id)}>
+          {skill.name}
+        </Alert>
+      );
     });
     return (
       <div style={STYLES.container}>
-        <img src={logo} style={STYLES.logo} alt='logo'/>
+        { loading ? (<Loading/>) : (<img src={logo} style={STYLES.logo} alt='logo' />)}
+        { error ? (
+          <Alert
+            dismissible
+            variant={'alert'}
+            onClose={() => this.setState({ error: false })}>
+            Something went wrong
+          </Alert>) :
+          null
+        }
         {tags}
         <AsyncTypeahead
+          stule={STYLES.input}
           isLoading={loading}
           onSearch={this.search}
           options={options.map(x => x.name)}
           onChange={(e) => {
-            console.log('onChange');
-            console.log(e[0]);
             this.setState({
               selected: e[0]
             });
           }}
         />
         <Button
+          style={STYLES.button}
           onClick={() => this.addSkill(this.state.selected)}
         >Add skill</Button>
+        <Button
+          variant='secondary'
+          style={STYLES.button}
+          onClick={() => {
+            Cookies.set({});
+            this.props.navigate(HOME, {});
+          }}
+        >Logout</Button>
       </div>
     );
   }
