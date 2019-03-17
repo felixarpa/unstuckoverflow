@@ -29,7 +29,7 @@ def post():
 
         tag = db_session().query(Tag).filter_by(name=body['tag_name']).first()
         if not tag:
-            return jsonify(error=True, message='No tag found with {} as id.'.format(body['tag_id'])), 400
+            return jsonify(error=True, message='No tag found with {} as name.'.format(body['tag_name'])), 400
 
         user_tag = db_session().query(UserToTag).filter_by(user_id=body['user_id'], tag_id=tag.id).first()
         if not user_tag:
