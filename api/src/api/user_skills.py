@@ -19,7 +19,7 @@ def get(user_id):
 def post():
     try:
         body = request.json
-        required_parameters = ['user_id', 'tag_id']
+        required_parameters = ['user_id', 'tag_name']
         if not all(x in body for x in required_parameters):
             return jsonify(error=True, message='All request body parameters are required.'), 400
 
@@ -27,15 +27,15 @@ def post():
         if not user:
             return jsonify(error=True, message='No user found with {} as id.'.format(body['user_id'])), 400
 
-        tag = db_session().query(Tag).filter_by(id=body['tag_id']).first()
+        tag = db_session().query(Tag).filter_by(name=body['tag_name']).first()
         if not tag:
-            return jsonify(error=True, message='No tag found with {} as id.'.format(body['tag_id'])), 400
+            return jsonify(error=True, message='No tag found with {} as name.'.format(body['tag_name'])), 400
 
-        user_tag = db_session().query(UserToTag).filter_by(user_id=body['user_id'], tag_id=body['tag_id']).first()
+        user_tag = db_session().query(UserToTag).filter_by(user_id=body['user_id'], tag_id=tag.id).first()
         if not user_tag:
             user_tag = UserToTag(
                 user_id=body['user_id'],
-                tag_id=body['tag_id']
+                tag_id=tag.id
             )
             db_session().add(user_tag)
             db_session().flush()
