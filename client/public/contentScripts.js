@@ -30,7 +30,7 @@ chrome.storage.local.get(['userId'], (res) => {
     }
   };
 
-  xhr.open("POST", "http://localhost:8081/help");
+  xhr.open("POST", "http://35.187.102.14:8081/help");
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.setRequestHeader("cache-control", "no-cache");
 
