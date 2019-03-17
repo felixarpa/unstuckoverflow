@@ -39,7 +39,7 @@ const STYLES = {
   logo: {
     height: '50px',
     marginTop: '20px',
-    marginBottom: '10px',
+    marginBottom: '20px',
   },
   skill: {
     width: '360px',
@@ -63,7 +63,7 @@ class Profile extends Component {
     super(props);
 
     this.state = {
-      loading: false,
+      loading: true,
       options: [],
       skills: [],
       selected: '',

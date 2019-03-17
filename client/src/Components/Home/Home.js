@@ -23,6 +23,8 @@ const STYLES = {
   },
   logo: {
     height: '100px',
+    marginTop: '20px',
+    marginBottom: '20px',
   }
 };
 

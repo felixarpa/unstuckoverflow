@@ -36,8 +36,6 @@ class App extends Component {
   }
 
   navigate = (pageKey, params) => {
-    console.log(pageKey);
-    console.log(params);
     this.setState({
       pageKey,
       ...params,

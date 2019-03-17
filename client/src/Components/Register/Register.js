@@ -15,7 +15,7 @@ const STYLES = {
   },
   logo: {
     marginTop: '20px',
-    marginBottom: '10px',
+    marginBottom: '20px',
     height: '50px',
   },
   form: {
