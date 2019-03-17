@@ -7,11 +7,13 @@ class HelpTest(unittest.TestCase):
     def setUp(self):
         self.endpoint = 'http://0.0.0.0:8081/help'
         self.user_id = 2
-        self.stackoverflow_url = 'https://stackoverflow.com/questions/43325501/how-do-i-write-a-sequence-of-promises-in-python'
+        self.stackoverflow_url_python = 'https://stackoverflow.com/questions/43325501/how-do-i-write-a-sequence-of-promises-in-python'
+        self.stackoverflow_url_ruby = 'https://stackoverflow.com/questions/2200825/convert-string-to-datetime'
+        self.stackoverflow_url_scala = 'https://stackoverflow.com/questions/16996549/how-to-convert-string-to-date-time-in-scala'
         self.headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.106 Safari/537.36'}
 
     def test_endpoint(self):
-        request = requests.get(self.stackoverflow_url, headers=self.headers)
+        request = requests.get(self.stackoverflow_url_scala, headers=self.headers)
         self.assertEqual(request.status_code, 200)
 
         data = {'page_html': request.text, 'user_id': 2}
