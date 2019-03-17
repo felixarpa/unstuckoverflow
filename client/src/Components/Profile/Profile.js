@@ -31,20 +31,6 @@ class Profile extends Component {
     return (
       <div style={STYLES.container}>
         <img src={logo} style={STYLES.logo} alt='logo' />
-        <div style={STYLES.buttonsContainer}>
-          <Button
-            variant='primary'
-            style={STYLES.button}
-            onClick={() => this.props.navigate(LOGIN, {})}>
-            Login
-          </Button>
-          <Button
-            variant='secondary'
-            style={STYLES.button}
-            onClick={() => this.props.navigate(REGISTER, {})}>
-            Register
-          </Button>
-        </div>
       </div>
     );
   }

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import {Alert, Button, Form} from 'react-bootstrap';
 import logo from '../../unstuckoverflow.svg';
 import { HOME, PROFILE } from '../../utils/PageKeys';
 import {Cookies} from "../../utils/Cookies";
+import {login} from '../../utils/unstackoverflowClient';
+import Loading from "../SmallLoading/Loading";
 
 const STYLES = {
   container: {
-    height: '300px',
     width: '300px',
     display: 'flex',
     flexDirection: 'column',
@@ -14,6 +15,8 @@ const STYLES = {
     alignItems: 'center',
   },
   logo: {
+    marginTop: '20px',
+    marginBottom: '10px',
     height: '50px',
   },
   form: {
@@ -22,12 +25,12 @@ const STYLES = {
   },
   submit: {
     width: '100px',
-    marginBottom: '5px',
+    marginBottom: '20px',
     marginRight: '5px',
   },
   back: {
     width: '100px',
-    marginBottom: '5px',
+    marginBottom: '20px',
     marginLeft: '5px',
   },
 };
@@ -41,22 +44,9 @@ class Login extends Component {
       email: '',
       password: '',
       loading: false,
+      error: false,
     };
   }
-
-  login = () => {
-    const { email, password } = this.state;
-    console.log(email);
-    console.log(password);
-    // let cookies = Cookies.get();
-    // cookies.userId = 1;
-    // Cookies.set(cookies);
-    // this.props.navigate(PROFILE, {});
-    this.setState({
-      loading: true,
-      validated: true,
-    });
-  };
 
   handleEmailChange = (event) => {
     this.setState({ email: event.target.value });
@@ -69,7 +59,20 @@ class Login extends Component {
   handleSubmit(event) {
     const form = event.currentTarget;
     if (form.checkValidity()) {
-      this.login();
+      const { email, password } = this.state;
+      const self = this;
+      login(email, password)
+        .then((response) => {
+          let cookies = Cookies.get();
+          cookies.userId = response;
+          Cookies.set(cookies);
+          self.props.navigate(PROFILE, {});
+        })
+        .catch(() => self.setState({ loading: false, error: true}));
+      this.setState({
+        loading: true,
+        validated: true,
+      });
     }
     event.preventDefault();
     event.stopPropagation();
@@ -78,10 +81,10 @@ class Login extends Component {
 
 
   render() {
-    const { validated, email, password, loading } = this.state;
+    const { validated, email, password, loading, error } = this.state;
     return (
       <div style={STYLES.container}>
-        <img src={logo} style={STYLES.logo} alt='logo' />
+        { loading ? (<Loading />) : (<img src={logo} style={STYLES.logo} alt='logo' />)}
         <Form
           noValidate
           validated={validated}
@@ -107,6 +110,7 @@ class Login extends Component {
               value={password}
             />
           </Form.Group>
+          { error ? (<Alert dismissible variant={'danger'}>Login failed, try again.</Alert>) : null }
           <Button
             variant='primary'
             type='submit'

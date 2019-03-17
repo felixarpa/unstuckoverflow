@@ -3,6 +3,8 @@ import { Alert, Button, Form } from 'react-bootstrap';
 import logo from '../../unstuckoverflow.svg';
 import { HOME, PROFILE } from '../../utils/PageKeys';
 import { Cookies } from "../../utils/Cookies";
+import {postUser} from "../../utils/unstackoverflowClient";
+import Loading from "../Login/Login";
 
 const STYLES = {
   container: {
@@ -44,34 +46,30 @@ class Register extends Component {
       password: '',
       repeatPassword: '',
       loading: false,
-      error: {
-        active: true,
-        message: 'Password to short',
-      },
+      error: false,
     };
   }
 
   login = () => {
-    const {
-      name,
-      email,
-      phone,
-      password,
-      repeatPassword,
-    } = this.state;
-    console.log(name);
-    console.log(email);
-    console.log(phone);
-    console.log(password);
-    console.log(repeatPassword);
-    // let cookies = Cookies.get();
-    // cookies.userId = 1;
-    // Cookies.set(cookies);
-    // this.props.navigate(PROFILE, {});
-    this.setState({
-      loading: true,
-      validated: true,
-    });
+    const { name, email, phone, password, repeatPassword } = this.state;
+    if (repeatPassword === password) {
+      const self = this;
+      postUser(name, email, phone, password)
+        .then((response) => {
+          console.log(response);
+          let cookies = Cookies.get();
+          cookies.userId = response.id;
+          Cookies.set(cookies);
+          self.props.navigate(PROFILE, {});
+        })
+        .catch(() => self.setState({loading: false, error: true}));
+      this.setState({
+        loading: true,
+        validated: true,
+      });
+    } else {
+      this.setState({loading: false, error: true});
+    }
   };
 
   handleNameChange = (event) => {
@@ -118,7 +116,7 @@ class Register extends Component {
 
     return (
       <div style={STYLES.container}>
-        <img src={logo} style={STYLES.logo} alt='logo' />
+        { loading ? (<Loading />) : (<img src={logo} style={STYLES.logo} alt='logo' />)}
         <Form
           noValidate
           validated={validated}
@@ -174,7 +172,7 @@ class Register extends Component {
               value={repeatPassword}
             />
           </Form.Group>
-          { error.active ? (<Alert dismissible variant={'danger'}>{error.message}</Alert>) : null }
+          { error ? (<Alert dismissible variant={'danger'}>Invalid form, please review your data</Alert>) : null }
           <Button
             variant='primary'
             type='submit'
