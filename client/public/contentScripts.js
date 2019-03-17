@@ -27,7 +27,8 @@ if (userId != null) {
         if (this.response.response.skills.length > 0) {
           var alertMessage = this.response.response.user.full_name + ' knows about [' +
                             this.response.response.skills.join(', ') + ']. You should ask them about your doubt!';
-          alert(alertMessage)
+          // alert(alertMessage)
+          swal("Having some troubles?", alertMessage, "warning");
         }
       } else {
         console.log('Error in the request:', this.response)
