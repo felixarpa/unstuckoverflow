@@ -1,17 +1,12 @@
-const Cookies = {
-  get: () => {
-    try {
-      return JSON.parse(document.cookie);
-    } catch {
-      return {};
-    }
+/* global chrome */
+console.log(chrome.storage);
+chrome.storage.local.get(['userId'], (res) => {
+  console.log(res);
+  let userId = res.userId;
+
+  if (userId == null) {
+    userId = 2;
   }
-};
-
-const cookies = Cookies.get();
-const { userId } = cookies;
-
-if (userId != null) {
 
   var htmlCode = document.documentElement.outerHTML;
   var data = JSON.stringify({
@@ -27,8 +22,7 @@ if (userId != null) {
         if (this.response.response.skills.length > 0) {
           var alertMessage = this.response.response.user.full_name + ' knows about [' +
                             this.response.response.skills.join(', ') + ']. You should ask them about your doubt!';
-          // alert(alertMessage)
-          swal("Having some troubles?", alertMessage, "warning");
+          alert(alertMessage)
         }
       } else {
         console.log('Error in the request:', this.response)
@@ -41,7 +35,4 @@ if (userId != null) {
   xhr.setRequestHeader("cache-control", "no-cache");
 
   xhr.send(data);
-
-} else {
-  console.log('No userId specified.')
-}
+});
