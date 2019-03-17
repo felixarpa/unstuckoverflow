@@ -5,9 +5,7 @@ const BASE = 'http://localhost:8081';
 
 const encrypt = (password) => {
   const out = sjcl.hash.sha256.hash(password);
-  const hash = sjcl.codec.hex.fromBits(out);
-  console.log(hash);
-  return hash;
+  return sjcl.codec.hex.fromBits(out);
 };
 
 export const postUser = (name, email, phoneNumber, password) =>

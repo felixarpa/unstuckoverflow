@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../../unstuckoverflow.svg';
 import {asyncContainer, Typeahead} from 'react-bootstrap-typeahead';
-import { Cookies } from '../../utils/Cookies';
+import { Storage } from '../../utils/Storage';
 import {
   getSkills,
   deleteSkill,
@@ -128,7 +128,7 @@ class Profile extends Component {
   }
 
   render() {
-    const { skills, options, loading, error } = this.state;
+    const {skills, options, loading, error} = this.state;
     const tags = skills.map((skill, index) => {
       return (
         <Alert
@@ -143,14 +143,14 @@ class Profile extends Component {
     });
     return (
       <div style={STYLES.container}>
-        { loading ? (<Loading/>) : (<img src={logo} style={STYLES.logo} alt='logo' />)}
-        { error ? (
-          <Alert
-            dismissible
-            variant={'alert'}
-            onClose={() => this.setState({ error: false })}>
-            Something went wrong
-          </Alert>) :
+        {loading ? (<Loading/>) : (<img src={logo} style={STYLES.logo} alt='logo'/>)}
+        {error ? (
+            <Alert
+              dismissible
+              variant={'alert'}
+              onClose={() => this.setState({error: false})}>
+              Something went wrong
+            </Alert>) :
           null
         }
         {tags}
@@ -173,7 +173,7 @@ class Profile extends Component {
           variant='secondary'
           style={STYLES.button}
           onClick={() => {
-            Cookies.set({});
+            Storage.set('');
             this.props.navigate(HOME, {});
           }}
         >Logout</Button>

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { LOADING, HOME, LOGIN, REGISTER, PROFILE } from './utils/PageKeys';
-import { Cookies } from './utils/Cookies';
 import Loading from './Components/Loading/Loading';
 import Home from './Components/Home/Home';
 import Login from "./Components/Login/Login";
 import Register from './Components/Register/Register';
-import Profile from "./Components/Profile/Profile";
+import Profile from './Components/Profile/Profile';
+import { Storage } from './utils/Storage';
 
 const STYLES = {
   container: {
@@ -24,13 +24,13 @@ class App extends Component {
 
   componentDidMount() {
     if (this.state.pageKey === LOADING) {
-      const cookies = Cookies.get();
-      const { userId } = cookies;
-      this.setState(userId ? {
-        pageKey: PROFILE,
-        userId: userId
-      } : {
-        pageKey: HOME,
+      Storage.get((res) => {
+        this.setState(res.userId && res.userId !== '' ? {
+          pageKey: PROFILE,
+          userId: res.userId
+        } : {
+          pageKey: HOME,
+        });
       });
     }
   }

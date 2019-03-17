@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
 import logo from '../../unstuckoverflow.svg';
 import { HOME, PROFILE } from '../../utils/PageKeys';
-import { Cookies } from '../../utils/Cookies';
+import { Storage } from '../../utils/Storage';
 import { postUser } from '../../utils/unstuckoverflowClient';
 import Loading from '../SmallLoading/Loading';
 
@@ -56,10 +56,7 @@ class Register extends Component {
       const self = this;
       postUser(name, email, phone, password)
         .then((response) => {
-          console.log(response);
-          let cookies = Cookies.get();
-          cookies.userId = response.id;
-          Cookies.set(cookies);
+          Storage.set(response.id);
           self.props.navigate(PROFILE, {});
         })
         .catch(() => self.setState({loading: false, error: true}));

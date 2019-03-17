@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Alert, Button, Form} from 'react-bootstrap';
 import logo from '../../unstuckoverflow.svg';
 import { HOME, PROFILE } from '../../utils/PageKeys';
-import { Cookies } from '../../utils/Cookies';
+import { Storage } from '../../utils/Storage';
 import { login } from '../../utils/unstuckoverflowClient';
 import Loading from '../SmallLoading/Loading';
 
@@ -63,10 +63,8 @@ class Login extends Component {
       const self = this;
       login(email, password)
         .then((response) => {
-          let cookies = Cookies.get();
-          cookies.userId = response;
-          Cookies.set(cookies);
-          self.props.navigate(PROFILE, { userId: response });
+          Storage.set(response);
+          self.props.navigate(PROFILE, {userId: response});
         })
         .catch(() => self.setState({ loading: false, error: true}));
       this.setState({
