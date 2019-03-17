@@ -70,9 +70,9 @@ def login_post():
         user = db_session().query(User).filter_by(email=body['email']).first()
 
         if user:
-            contrasenya = user.password
-            if contrasenya == body['password'].lower():
-                return jsonify(error=False, response=''), 200
+            password = user.password
+            if password == body['password'].lower():
+                return jsonify(error=False, response=user.id), 200
             else:
                 return jsonify(error=True, message='The password is not correct'), 400
         else:
